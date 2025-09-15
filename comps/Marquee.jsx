@@ -10,10 +10,10 @@ const Marquee = ({ products }) => {
         You may also like
       </h1>
 
-      <section className=" mt-10 relative h-52 sm:h-96  w-full  overflow-hidden">
-        <div className={`flex  justify-center`}>
+      <section className=" mt-10 relative h-52 sm:h-96  w-full  overflow-x-auto overflow-y-hidden scrollbar-hide">
+        <div className={`flex flex-row-reverse justify-start min-w-max`}>
           {products.map((product) => (
-            <Products gap={"mr-5"} key={product._id} products={product} />
+            <Products gap={"ml-5"} key={product._id} products={product} />
           ))}
         </div>
       </section>

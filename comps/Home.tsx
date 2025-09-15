@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { BannerDataTypes, ProductsTypes } from "../app/page";
 import FooterBanner from "../comps/FooterBanner";
 import MainBanner from "./MainBanner";
 import Products from "../app/Products";
+import SortDropdown from "./SortDropdown";
 
 interface HomeProps {
   products: ProductsTypes[];
@@ -11,6 +12,17 @@ interface HomeProps {
 }
 
 const Home = ({ products, bannerData }: HomeProps) => {
+  const [sortOption, setSortOption] = useState<string>("default");
+
+  // Sort products based on selected option
+  const sortedProducts = useMemo(() => {
+    if (sortOption === "low-to-high") {
+      return [...products].sort((a, b) => a.price - b.price);
+    } else if (sortOption === "high-to-low") {
+      return [...products].sort((a, b) => b.price - a.price);
+    }
+    return products; // default order
+  }, [products, sortOption]);
 
   return (
     <main>
@@ -27,15 +39,18 @@ const Home = ({ products, bannerData }: HomeProps) => {
         {/* <p className=" text-base text-secondary">Best in the Market</p> */}
       </section>
 
+      {/* === SORT OPTIONS  */}
+      <SortDropdown sortOption={sortOption} onSortChange={setSortOption} />
+
       {/* === SHOW PRODUCTS  */}
       <section
-        className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4
+        className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4
        lg:mx-20 overflow-hidden
       "
       >
         {/* === MAP PRODUCTS  */}
-        {products?.map((products: ProductsTypes) => {
-          return <Products key={products._id} products={products} />;
+        {sortedProducts?.map((product: ProductsTypes) => {
+          return <Products key={product._id} products={product} />;
         })}
       </section>
 

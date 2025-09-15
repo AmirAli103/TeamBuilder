@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
+// Currency conversion: 1 USD = 147.67 JPY
+const convertUSDToJPY = (usdPrice: number) => {
+  return Math.round(usdPrice * 147.67);
+};
+
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!, {
   // https://github.com/stripe/stripe-node#configuration
   apiVersion: "2022-11-15",
@@ -33,12 +38,12 @@ export async function POST(req: Request) {
 
         return {
           price_data: {
-            currency: "myr",
+            currency: "jpy",
             product_data: {
               name: item.name,
               images: [newImage],
             },
-            unit_amount: item.price * 100,
+            unit_amount: convertUSDToJPY(item.price),
           },
           adjustable_quantity: {
             enabled: true,

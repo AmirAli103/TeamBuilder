@@ -5,6 +5,7 @@ import { useNextSanityImage } from "next-sanity-image";
 import { ProductsTypes } from "./page";
 import { memo, useContext, useEffect, useState } from "react";
 import { UC } from "./context";
+import { convertUSDToJPY } from "../lib/utils";
 
 interface ProductsProps {
   products: ProductsTypes;
@@ -52,7 +53,7 @@ const Products = ({ products, gap }: ProductsProps) => {
     >
       <div
         className=" relative cursor-pointer shadow-sm shadow-lightDim overflow-hidden
-            rounded-md h-32 w-32 sm:h-40 sm:w-40 lg:h-56 lg:w-56"
+            rounded-md h-40 w-40 sm:h-48 sm:w-48 lg:h-64 lg:w-64 xl:h-72 xl:w-72"
       >
         {/* === IMAGE */}
         <Link href={`/product/${products.slug.current}`}>
@@ -64,13 +65,13 @@ const Products = ({ products, gap }: ProductsProps) => {
 
       {/* === NAME & PRICE */}
       <section className=" mx-1 sm:mx-2 flex mt-2 items-center justify-between">
-        <nav className=" text-sm font-normal sm:font-medium">
+        <nav className=" text-base font-normal sm:font-medium">
           <p> {products.name} </p>
           <div className=" flex gap-3">
             <span className=" text-sm text-lightGray line-through ">
-              ${products.oldPrice}
+              ¥{convertUSDToJPY(products.oldPrice)}
             </span>
-            <b className=" text-zinc-900 "> ${products.price} </b>
+            <b className=" text-base text-zinc-900 "> ¥{convertUSDToJPY(products.price)} </b>
           </div>
         </nav>
 

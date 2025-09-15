@@ -45,3 +45,12 @@
   background: rgb(9, 107, 9);
   color: #b41c4c;
 }
+
+/* Hide scrollbar for marquee */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
